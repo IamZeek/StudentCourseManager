@@ -1,0 +1,172 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="container-index bg-white w-100 h-100 main-screen shadow p-3 mb-5">
+    <div class="d-flex justify-content-around align-items-center w-80 mb-3">
+        <h3 id="title-index">Home Page</h3>
+        <a class="btn btn-primary rounded-circle" id="addItemButton" onclick="openModel('coursesModel','Add')">+</a> 
+    </div>
+    <div id="body-index">
+        <div id="partialview" class="w-100 h-100 overflow-hidden"></div>
+        
+    </div>
+</div>
+
+@* Model for Add/Edit Students *@
+<div class="modal fade" id="studentsModel" tabindex="-1" aria-labelledby="studentsModelLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="studentsModelLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <form method="post" id="StudentForm">
+                        <table class="w-100">
+                            <tr>
+                                <td><h5>First Name</h5></td>
+                                <td><input type="text" class="form-control shadow input-styling" id="Student_FirstName" /></td>
+                            </tr>
+                            <tr>
+                                <td><h5>Sur Name</h5></td>
+                                <td><input type="text" class="form-control shadow input-styling" id="Student_SurName" /></td>
+                            </tr>
+                            <tr>
+                                <td><h5>DOB</h5></td>
+                                <td><input type="date" class="form-control shadow input-styling" id="Student_DOB" /></td>
+                            </tr>
+                            <tr>
+                                <td><h5>Gender</h5></td>
+                                <td>
+                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                        <label class="btn btn-secondary active">
+                                            <input type="radio" name="Gender" id="Male" autocomplete="off" checked id="Student_Gender"> Male
+                                        </label>
+                                        <label class="btn btn-secondary">
+                                            <input type="radio" name="Gender" id="Female" autocomplete="off" id="Student_Gender"> Female
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><h5>Address1</h5></td>
+                                <td><textarea class="form-control shadow input-styling" rows="3" id="Student_Address1"></textarea></td>
+                            </tr>
+                            <tr>
+                                <td><h5>Address2</h5></td>
+                                <td><textarea class="form-control shadow input-styling" rows="3" id="Student_Address2"></textarea></td>
+                            </tr>
+                            <tr>
+                                <td><h5>Address3</h5></td>
+                                <td><textarea class="form-control shadow input-styling" rows="3" id="Student_Address3"></textarea></td>
+                            </tr>
+                        </table>
+                    </form>
+                    
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" id="submitStudentBtn" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Model for Add/Edit Courses *@
+<div class="modal fade" id="coursesModel" tabindex="-1" aria-labelledby="coursesModelLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="coursesModelLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <form id="CoursesForm" method="Post">
+                        <table class="w-100">
+                            <tr>
+                                <td><h5>Course Id</h5></td>
+                                <td><input type="text" class="form-control shadow input-styling" id="Courses_CourseCode"/></td>
+                            </tr>
+                            <tr>
+                                <td><h5>Course Name</h5></td>
+                                <td><input type="text" class="form-control shadow input-styling" id="Courses_CourseName" /></td>
+                            </tr>
+                            <tr>
+                                <td><h5>Teacher Name</h5></td>
+                                <td><input type="text" class="form-control shadow input-styling" id="Courses_TeacherName" /></td>
+                            </tr>
+                            <tr>
+                                <td><h5>Start Date</h5></td>
+                                <td><input type="date" class="form-control shadow input-styling" id="Courses_StartDate" /></td>
+                            </tr>
+                            <tr>
+                                <td><h5>End Date</h5></td>
+                                <td><input type="date" class="form-control shadow input-styling" id="Courses_EndDate" /></td>
+                            </tr>
+
+                        </table>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="submitCourseBtn" class="btn btn-primary">Save changes</button>
+                </div>
+        </div>
+    </div>
+</div>
+
+@* Remove Alert Model *@
+<div class="modal fade" id="removeAlertModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="removeModelHeader">Modal title</h5>
+            </div>
+            <div class="modal-body">
+                <p id="removeModelBody"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="removeModelButton">Agree</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Linked Courses Model *@
+<div class="modal fade" id="LinkedData" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="LinkedDataTitle"></h5>
+            </div>
+            <div class="modal-body">
+                <table id="LinkedDataList" class="w-100">
+
+                </table>
+            </div>
+            <div class="modal-footer">
+                <div class="form-group">
+                    <label for="searchDropdown">Add new Course</label>
+                    <div class="dropdown">
+                        <input type="text" class="form-control dropdown-toggle search-input" id="searchDropdown" data-bs-toggle="dropdown" aria-expanded="false" placeholder="Search" autocomplete="off">
+                        <ul class="dropdown-menu" aria-labelledby="searchDropdown" id="LinkedAddDataList">
+                            
+                        </ul>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Toast for Notification *@
+<div class="toast" role="alert" id="NotificationToast" aria-live="assertive" aria-atomic="true">
+    <div class="toast-body">
+    </div>
+</div>

@@ -1,0 +1,55 @@
+
+:root {
+    --custom-dark-color: rgb(148, 78, 99);
+    --custom-mid-color: rgb(202, 166, 166);
+    --custom-background-color: rgb(255, 231, 231);
+}
+
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+    margin: 0px;
+    padding: 0px;
+    background-color: var(--custom-background-color);
+    font-family: "Poppins", sans-serif;
+}
+
+.navbar {
+    background-color: rgba(255, 0, 0, 0.4);
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+    
+}
+
+.container{
+    height: 83vh;
+}
+
+.main-screen{
+    border-radius: 25px;
+}
+
+.input-styling{
+    border-radius: 10px;
+}
+
+.counter-shadow {
+    box-shadow: 0 0 5px var(--custom-dark-color);
+}

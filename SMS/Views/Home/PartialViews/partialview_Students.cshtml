@@ -1,0 +1,38 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model List<Students>
+
+<div>
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col" class="text-center">#</th>
+                <th scope="col" class="text-center">Firstname</th>
+                <th scope="col" class="text-center">Surname</th>
+                <th scope="col" class="text-center">DOB</th>
+                <th scope="col" class="text-center">Gender</th>
+                <th scope="col" class="text-center">Address</th>
+                <th scope="col" class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in Model)
+            {
+                <tr>
+                    <th scope="row" class="text-center">@item.Id</th>
+                    <td class="text-center">@item.FirstName</td>
+                    <td class="text-center">@item.SurName</td>
+                    <td class="text-center">@item.DOB.ToString("dd-MM-yyyy")</td>
+                    <td class="text-center">@item.Gender</td>
+                    <td class="text-center">@item.Address1</td>
+                    <td class="text-center">
+                        <a class="btn btn-primary" onclick="openLinkedCoursesModel(@item.Id,'CoursePerStudent','@item.FirstName @item.SurName')">View Courses</a>
+                        <a class="btn btn-warning" onclick="openModel('studentsModel','Edit',@item.Id)">Edit</a>
+                        <a class="btn btn-danger" onclick="openRemoveModel('studentsModel','@item.Id','@item.FirstName')">Remove</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
