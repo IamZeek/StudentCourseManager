@@ -1,13 +1,13 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@model List<Students>
+@model StudentPage
 
 <div>
     <table class="table table-bordered table-striped">
         <thead class="table-dark">
             <tr>
-                <th scope="col" class="text-center">#</th>
+                <th scope="col" class="text-center">Id</th>
                 <th scope="col" class="text-center">Firstname</th>
                 <th scope="col" class="text-center">Surname</th>
                 <th scope="col" class="text-center">DOB</th>
@@ -17,22 +17,30 @@
             </tr>
         </thead>
         <tbody>
-            @foreach(var item in Model)
+            @foreach (var subitems in Model.DataFetched)
             {
                 <tr>
-                    <th scope="row" class="text-center">@item.Id</th>
-                    <td class="text-center">@item.FirstName</td>
-                    <td class="text-center">@item.SurName</td>
-                    <td class="text-center">@item.DOB.ToString("dd-MM-yyyy")</td>
-                    <td class="text-center">@item.Gender</td>
-                    <td class="text-center">@item.Address1</td>
+                    <th scope="row" class="text-center">@subitems.Id</th>
+                    <td class="text-center">@subitems.FirstName</td>
+                    <td class="text-center">@subitems.SurName</td>
+                    <td class="text-center">@subitems.DOB.ToString("dd-MM-yyyy")</td>
+                    <td class="text-center">@subitems.Gender</td>
+                    <td class="text-center">@subitems.Address1</td>
                     <td class="text-center">
-                        <a class="btn btn-primary" onclick="openLinkedCoursesModel(@item.Id,'CoursePerStudent','@item.FirstName @item.SurName')">View Courses</a>
-                        <a class="btn btn-warning" onclick="openModel('studentsModel','Edit',@item.Id)">Edit</a>
-                        <a class="btn btn-danger" onclick="openRemoveModel('studentsModel','@item.Id','@item.FirstName')">Remove</a>
+                        <a class="btn btn-primary" onclick="openLinkedCoursesModel(@subitems.Id,'CoursePerStudent','@subitems.FirstName @subitems.SurName')">View Courses</a>
+                        <a class="btn btn-warning" onclick="openModel('studentsModel','Edit',@subitems.Id)">Edit</a>
+                        <a class="btn btn-danger" onclick="openRemoveModel('studentsModel','@subitems.Id','@subitems.FirstName')">Remove</a>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
+     <div id="paginationContainer">
+        <p id="Student_Pages" hidden>@Model.NumberOfPages</p>
+        <p id="Student_Current" hidden>@Model.CurrentPage</p>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+            </ul>
+        </nav>
+    </div>
 </div>

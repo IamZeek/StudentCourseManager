@@ -196,16 +196,20 @@ function openModel(model, modeltype, id) {
 
 //-------------------------------------------------------------------------------------------//
 /*Controller Pipelines*/
-function changePartialView(partialview) {
+function changePartialView(partialview,pageNumber) {
     const partialviewContainer = document.getElementById('partialview')
     partialviewContainer.hidden = true;
     sessionStorage.setItem("currentpage", partialview);
+    var keyData = {
+        name: partialview,
+        pageNumber: pageNumber
+    }
     $.ajax({
         url: '/Home/ChangeView',
         method: 'POST',
-        data: { 'name': partialview },
-        async: true,
+        data: keyData,
         success: function (response) {
+            $('#partialview').html(response);
             switch (partialview) {
                 case "partialview_Home":
                     $('#title-index').html('Home Page');
@@ -215,6 +219,20 @@ function changePartialView(partialview) {
                     $('#title-index').text('Student Panel');
                     $('#addItemButton').attr('onclick', 'openModel("studentsModel","Add")');
                     $('#addItemButton').show();
+                    var totalPages = parseInt(document.getElementById("Student_Pages").innerText);
+                    var paginationLinks = "";
+
+                    for (var i = 1; i <= totalPages; i++) {
+                        var activeClass = (i === pageNumber) ? "active" : "";
+
+                        paginationLinks += `
+                                <li class="page-item ${activeClass}">
+                                <a class="page-link btn btn-primary" href="#" onclick="changePartialView('${partialview}', ${i})">${i}</a>
+                                </li>
+                            `;
+                    }
+                    $(".pagination").html(paginationLinks);
+
                     break;
                 case "partialview_Courses":
                     $('#title-index').text('Course Panel');
@@ -222,8 +240,9 @@ function changePartialView(partialview) {
                     $('#addItemButton').show();
                     break;
             }
+            console.log(response)
             partialviewContainer.hidden = false;
-            partialviewContainer.innerHTML = response;
+/*            partialviewContainer.innerHTML = response.viewData;*/
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log("Error:", textStatus, errorThrown);

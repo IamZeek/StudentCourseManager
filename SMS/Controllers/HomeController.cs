@@ -26,7 +26,7 @@ namespace SMS.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ChangeView(string name)
+        public async Task<IActionResult> ChangeView(string name, int pageNumber)
         {
             if(!string.IsNullOrEmpty(name))
             {
@@ -45,8 +45,21 @@ namespace SMS.Controllers
                         return PartialView("PartialViews/partialview_Home", studentsMaxedOutData);
 
                     case "partialview_Students":
-                        var studentsData = await _students.FetchAll();
-                        return PartialView("PartialViews/partialview_Students", studentsData);
+                        if(pageNumber != 0)
+                        {
+                            int pageSize = 8;
+                            //var studentsData = await _students.FetchAll();
+                            //return PartialView("PartialViews/partialview_Students", studentsData);
+                            var students = await _students.FetchAll(pageNumber, pageSize);
+                            ViewBag.TotalPages = students.NumberOfPages;
+                            TempData["TotalPages"] = students.NumberOfPages;
+                            return PartialView("PartialViews/partialview_Students", students);
+                        }
+                        else
+                        {
+                            return NotFound();
+                        }
+                        
 
                     case "partialview_Courses":
                         var courseData = await _courses.FetchAll();
@@ -218,11 +231,11 @@ namespace SMS.Controllers
                 {
                     var fetchedStudentPerCourse = await _courses.FetchStudents(id);
                     var tempidlist = fetchedStudentPerCourse.Select(s => s.Id).ToList();
-                    var fetchStudents = await _students.FetchAll();
+                    var fetchStudents = await _students.FetchAll(0,100);
                     var combinedDataStudentsPerCorse = new
                     {
                         StudentPerCourse = fetchedStudentPerCourse,
-                        Students = fetchStudents.Where(students => !tempidlist.Contains(students.Id)).ToList()
+                        Students = fetchStudents.DataFetched.Where(students => !tempidlist.Contains(students.Id)).ToList()
 
                     };
                     return Json(combinedDataStudentsPerCorse);

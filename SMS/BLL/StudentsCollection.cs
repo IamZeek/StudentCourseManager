@@ -79,14 +79,28 @@ namespace SMS.BLL
             }
         }
 
-        public async Task<List<Students>> FetchAll()
+        public async Task<StudentPage> FetchAll(int  pageNumber,int pageSize)
         {
             try
             {
-                var data = await _context.Students.ToListAsync();
-                return data;
+                //var data = await _context.Students.ToListAsync();
+                //return data;
+                var query = await _context.Students
+                                 .OrderBy(s => s.Id) // Order by some property (e.g., Id)
+                                 .Skip((pageNumber - 1) * pageSize) // Skip items on previous pages
+                                 .Take(pageSize)
+                                 .ToListAsync(); // Take items for the current page
+                var pageCount = Math.Ceiling((double) _context.Students.Count()/pageSize);
+                var response = new StudentPage
+                {
+                    DataFetched = query,
+                    CurrentPage = pageNumber,
+                    NumberOfPages = (int)pageCount
+                };
+
+                return response;
             }
-            catch
+            catch (Exception ex)
             {
                 return null;
             }

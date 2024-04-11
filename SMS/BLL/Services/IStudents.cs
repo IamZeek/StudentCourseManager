@@ -4,7 +4,7 @@ namespace SMS.BLL.Services
 {
     public interface IStudents
     {
-        Task<List<Students>> FetchAll();
+        Task<StudentPage> FetchAll(int pageNumber, int pageSize);
         Task<List<ItemCounts>> StudentsMaxedOut();
         Task<string> SubmitData(Students studentData);
         Task<Students> FetchOne(int Contid);
